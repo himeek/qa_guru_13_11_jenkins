@@ -26,7 +26,6 @@ public class TestBase {
         Configuration.browserCapabilities = capabilities;
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.browserSize = "1800x900";
-        Configuration.holdBrowserOpen = true;
         Configuration.remote = "http://65.108.161.82:8080/wd/hub";
     }
 

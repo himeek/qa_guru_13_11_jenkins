@@ -40,6 +40,5 @@ public class PracticeFormTestWithRandomData extends TestBase {
                     .checkResults("Address", testData.currentAddress)
                     .checkResults("State and City", testData.state + " " + testData.city);
         });
-
     }
 }

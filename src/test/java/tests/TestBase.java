@@ -2,7 +2,9 @@ package tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
+import config.CredentialsConfig;
 import io.qameta.allure.selenide.AllureSelenide;
+import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -13,6 +15,7 @@ import static helpers.Attachments.*;
 public class TestBase {
 
     PracticeFormPage practiceFormPage = new PracticeFormPage();
+    public static CredentialsConfig config = ConfigFactory.create(CredentialsConfig.class);
     TestData testData = new TestData();
 
     @BeforeAll
@@ -23,10 +26,12 @@ public class TestBase {
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", true);
 
-        Configuration.browserCapabilities = capabilities;
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.browserSize = "1800x900";
-        Configuration.remote = "http://65.108.161.82:8080/wd/hub";
+        Configuration.baseUrl = config.baseUrl();
+        Configuration.browser = System.getProperty("browser");
+        Configuration.browserVersion = System.getProperty("version");
+        Configuration.browserSize = System.getProperty("browserSize");
+        String remoteDriverUrl = System.getProperty("remoteDriverUrl");
+        Configuration.remote = String.format("https://%s:%s@%s", config.login(), config.password(), remoteDriverUrl);
     }
 
     @AfterEach
